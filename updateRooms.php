@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php
+session_start();
+			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){
+			}else{
+			 header("location:index.php");	
+			}
+			
+ ?>	
 <html>
 <head>
   <meta charset="utf-8">
@@ -156,95 +163,101 @@
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->	
-     <h2>Fill all the fields to the register your hostel</h2>	
+     <h2>Fill all the fields to update  Room details</h2>	
     						<div class="panel-body">
-			<form method="post" action="registerHostels.php" name="registration" class="form-horizontal">
+			<form method="post" action="updateRooms.php" name="registration" class="form-horizontal">
 											
 										
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Hostel Name  </label>
+<label class="col-sm-2 control-label"> Room Number  </label>
 <div class="col-sm-8">
-<input type="text" name="hName" id="hName"  class="form-control" required="required" >
+<input type="text" name="rNumber" id="rNumber"  class="form-control" required="required" >
 </div>
 </div>
 
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Location  </label>
+<label class="col-sm-2 control-label">Choose Room Category </label>
 <div class="col-sm-8">
-<input type="text" name="hLocation" id="hLocation"  class="form-control" required="required" >
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Telephone Number  </label>
-<div class="col-sm-8">
-<input type="text" name="hPhone" id="hPhone"  class="form-control" required="required" placeholder="This number should be registered on mobile money">
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Custodian  </label>
-<div class="col-sm-8">
-<input type="text" name="hCustodian" id="hCustodian"  class="form-control" required="required" placeholder="custodian's Name">
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Allowed Students  </label>
-<div class="col-sm-8">
-<select name="hGender" class="form-control" required="required">
-<option value="">Ladies</option>
-<option value="male">Gents</option>
-<option value="female" selected>Both Ladies and Gents</option>
-
+<select name="rCategory" value="rCategory" class="form-control" required="required">
+<option >Single</option>
+<option selected>Double</option>
+<option >Triple</option>
 </select>
 </div>
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Hostel Email id </label>
+<label class="col-sm-2 control-label">Room Floor  </label>
 <div class="col-sm-8">
-<input type="email" name="hEmail" id="hEmail"  class="form-control" onBlur="checkAvailability()" required="required">
+<input type="text" name="rFloor" id="rFloor"  class="form-control" required="required">
+</div>
+</div>
+
+<div class="form-group">
+<label class="col-sm-2 control-label">Room Price  </label>
+<div class="col-sm-8">
+<input type="number" name="rPrice" id="rPrice"  class="form-control" required="required">
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label"> hostelId </label>
+<div class="col-sm-8">
+<input type="number" name="hId" id="hId"  class="form-control"  required="required" placeholder="Enter your hostel ID">
 <span id="user-availability-status" style="font-size:12px;"></span>
 </div>
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Upload Hostel Image  </label>
+<label class="col-sm-2 control-label">Upload Room Image  </label>
 <div class="col-sm-8">
-<input type="file" name="hPicture" id="hPicture" accept="image/*" class="form-control" required="required">
+<input type="file" name="rPicture" id="rPicture" accept="image/*" class="form-control" required="required">
 </div>
 </div>
 <div class="col-sm-6 col-sm-offset-4">
 <input type="reset" value="Cancel" class="btn btn-primary">
 
-<input type="submit" name="register" Value="Register" class="btn btn-primary">
+<input type="submit" name="Update" Value="Update" class="btn btn-primary">
 </div>
 </form><br/>
 <div>
 <?php
-if(isset($_POST['register'])){
+if(isset($_POST['Update'])){
 require_once'database.php';
 //optaining form parameters
-$hName =$_POST['hName'];
-$hLocation =$_POST['hLocation'];
-$hPhone =$_POST['hPhone'];
-$hCustodian =$_POST['hCustodian'];
-$hGender =$_POST['hGender'];
-$hEmail =$_POST['hEmail'];
-$hPicture =$_POST['hPicture'];
-
-// inserting the variables into the database
-$hInsert= mysqli_query($con,"insert into hostel(hName,hLocation,hPhone,hCustodian,studentType,hEmail,status,hPhoto) 
-values('$hName','$hLocation','$hPhone','$hCustodian','$hGender','$hEmail','pending','$hPicture')");
-if($hInsert){
-	echo"<h2 style='font-size:15pt'> Hostel ".$hName." has been registered sucessfully</h2>";
+$rNumber =$_POST['rNumber'];
+$rCategory =$_POST['rCategory'];
+$rFloor =$_POST['rFloor'];
+$rPrice =$_POST['rPrice'];
+$hId =$_POST['hId'];
+$rPicture =$_POST['rPicture'];
+$roomStatus="Free";
+// checking if the hostel is registered
+$sel= mysqli_query($con,"select * from hostel where hostelId='$hId'");
+$row = mysqli_fetch_array($sel);
+$num= mysqli_num_rows($sel);
+if($num == 1){
+	if($row['status']=="approved"){
+	
+	//inserting values into table roomEdit
+	$insert= mysqli_query($con,"insert into room(roomNumber,roomCategory,roomFloor,roomPrice,roomStatus,hostelId,roomImage)
+	values('$rNumber','$rCategory','$rFloor','$rPrice','$roomStatus','$hId','$rPicture')");
+	if($insert){
+		echo"<h3 style='color:blue'> Data saved successfully. Room ".$rNumber." is Now ready to be booked by students</h3>";
+	}
+	else{
+		echo"<h3 style='color:red'> Sorry, An error has occured while saving the data. please again</h3>";
+	}
+	}
+	else{
+		echo"<h3 style='color:red'> Hostel  ".$row['hName']." is not Approved by the Admin. Contact the Admin for Approval </h3>";
+	}
 }
 else{
-	echo"<h2 style='color:red'> Sorry! an error has occured. please try again</h2>";
-}
+	echo"<h3 style='color:red'> Hostel Id ".$hId." is not found. Please first register the hostel and try again</h3>";
+} 
+
 }
 ?>
 </div>

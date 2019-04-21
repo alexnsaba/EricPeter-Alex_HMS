@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php
+session_start();
+			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){
+			}else{
+			 header("location:index.php");	
+			}
+			
+ ?>	
 <html>
 <head>
   <meta charset="utf-8">
@@ -150,106 +157,83 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    
-
+    <!-- Content Header (Page header) -->  
+	<h1> <center> RECENT UPDATES</center></h1>
+     <?php	 
+   require_once 'database.php';
+   $user = $_SESSION['login_user'];
+   $sel_cust = mysqli_query($con,"select * from custodian where Username='$user'");
+   $row1= mysqli_fetch_array($sel_cust);
+   $hostelEmail= $row1['HostelEmail'];
+   $sel_host = mysqli_query($con,"select * from hostel where hEmail='$hostelEmail'");
+   $row2= mysqli_fetch_array($sel_host);
+   $hostId = $row2['hostelId'];
+   //selecting from room
+    $sel = mysqli_query($con,"select * from room where hostelId='$hostId'");
+   $num= mysqli_num_rows($sel);
+   if($num >0){
+	   
+	echo"<div class='box'>";
+	echo"<div class='box-body'>";
+	echo"<table  id='example1' class='table table-bordered table-striped'>";
+	echo"<thead>";
+	echo"<tr>";
+	echo"<th> <center>Room Id</center></th>";	
+	echo"<th> <center>Room Number</center> </th>";
+	echo"<th><center>Room Category</center></th>";
+	echo"<th><center>Floor</center>	</th>";
+	echo"<th><center>Price</center></th>";
+	echo"<th>	<center>Status</center>	</th>";
+	echo"<th>	<center>Hostel Id</center>	</th>";
+	echo"<th>	<center>Hostel Name</center>	</th>";
+	echo"<th>	<center>Room Image</center>	</th>";	
+	echo"</tr>";
+	echo"</thead>";
+	echo"<tbody>";
+	while($row= mysqli_fetch_array($sel)){
+		echo"<tr>";
+	echo"<td>".$row['RoomId']."</td>";	
+	echo"<td>".$row['roomNumber']."</td>";
+	echo"<td>".$row['roomCategory']."</td>";
+	echo"<td>".$row['roomFloor']."</td>";
+	echo"<td> UGX ".number_format($row['roomPrice'])."</td>";
+	echo"<td>".$row['roomStatus']."</td>";
+	echo"<td>".$row['hostelId']."</td>";
+	echo"<td>".$row2['hName']."</td>";
+    echo'<td>'.$row['roomImage'].'</td>';
+  
+  
+	
+	echo"</tr>";		
+	}
+	echo"</tbody>";
+	echo"<tfoot>";
+	echo"<tr>";
+	echo"<th> <center>Room Id</center></th>";	
+	echo"<th> <center>Room Number</center> </th>";
+	echo"<th><center>Room Category</center></th>";
+	echo"<th><center>Floor</center>	</th>";
+	echo"<th><center>Price</center></th>";
+	echo"<th>	<center>Status</center>	</th>";
+	echo"<th>	<center>Hostel Id</center>	</th>";
+	echo"<th>	<center>Hostel Name</center>	</th>";
+	echo"<th>	<center>Room Image</center>	</th>";
+	echo"</tr>";
+	echo"</tfoot>";
+	
+	echo"</table>";
+	echo"</div>";
+	echo"</div>";
+   }else{
+	   echo"<center><h2>No room records are available. Please update your rooms.</h2></center>";
+   }
+	mysqli_close($con);
+	?>
+	
     <!-- Main content -->
     <section class="content">
 	<!--Put your page content here-->	
-     <h2>Fill all the fields to the register your hostel</h2>	
-    						<div class="panel-body">
-			<form method="post" action="registerHostels.php" name="registration" class="form-horizontal">
-											
-										
-
-<div class="form-group">
-<label class="col-sm-2 control-label"> Hostel Name  </label>
-<div class="col-sm-8">
-<input type="text" name="hName" id="hName"  class="form-control" required="required" >
-</div>
-</div>
-
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Location  </label>
-<div class="col-sm-8">
-<input type="text" name="hLocation" id="hLocation"  class="form-control" required="required" >
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Telephone Number  </label>
-<div class="col-sm-8">
-<input type="text" name="hPhone" id="hPhone"  class="form-control" required="required" placeholder="This number should be registered on mobile money">
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Custodian  </label>
-<div class="col-sm-8">
-<input type="text" name="hCustodian" id="hCustodian"  class="form-control" required="required" placeholder="custodian's Name">
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Allowed Students  </label>
-<div class="col-sm-8">
-<select name="hGender" class="form-control" required="required">
-<option value="">Ladies</option>
-<option value="male">Gents</option>
-<option value="female" selected>Both Ladies and Gents</option>
-
-</select>
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label"> Hostel Email id </label>
-<div class="col-sm-8">
-<input type="email" name="hEmail" id="hEmail"  class="form-control" onBlur="checkAvailability()" required="required">
-<span id="user-availability-status" style="font-size:12px;"></span>
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Upload Hostel Image  </label>
-<div class="col-sm-8">
-<input type="file" name="hPicture" id="hPicture" accept="image/*" class="form-control" required="required">
-</div>
-</div>
-<div class="col-sm-6 col-sm-offset-4">
-<input type="reset" value="Cancel" class="btn btn-primary">
-
-<input type="submit" name="register" Value="Register" class="btn btn-primary">
-</div>
-</form><br/>
-<div>
-<?php
-if(isset($_POST['register'])){
-require_once'database.php';
-//optaining form parameters
-$hName =$_POST['hName'];
-$hLocation =$_POST['hLocation'];
-$hPhone =$_POST['hPhone'];
-$hCustodian =$_POST['hCustodian'];
-$hGender =$_POST['hGender'];
-$hEmail =$_POST['hEmail'];
-$hPicture =$_POST['hPicture'];
-
-// inserting the variables into the database
-$hInsert= mysqli_query($con,"insert into hostel(hName,hLocation,hPhone,hCustodian,studentType,hEmail,status,hPhoto) 
-values('$hName','$hLocation','$hPhone','$hCustodian','$hGender','$hEmail','pending','$hPicture')");
-if($hInsert){
-	echo"<h2 style='font-size:15pt'> Hostel ".$hName." has been registered sucessfully</h2>";
-}
-else{
-	echo"<h2 style='color:red'> Sorry! an error has occured. please try again</h2>";
-}
-}
-?>
-</div>
-
-</div>
+     
 
     </section>
     <!-- /.content -->

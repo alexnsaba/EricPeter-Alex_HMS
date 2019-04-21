@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+<?php
+session_start();
+			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){
+			}else{
+			 header("location:index.php");	
+			}			
+ ?>
+
 <html>
 <head>
   <meta charset="utf-8">
@@ -150,55 +157,22 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    
-
-    <!-- Main content -->
-    <section class="content">
-	<!--Put your page content here-->	
-     <h2>Fill all the fields to the register your hostel</h2>	
+    <!-- Content Header (Page header) -->  
+	
+	<h3>Choose a field to Edit and click the save button</h3>	
     						<div class="panel-body">
-			<form method="post" action="registerHostels.php" name="registration" class="form-horizontal">
-											
-										
+			<form method="post" action="editHostelDetails.php" name="registration" class="form-horizontal">
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Hostel Name  </label>
+<label class="col-sm-2 control-label">Fields  </label>
 <div class="col-sm-8">
-<input type="text" name="hName" id="hName"  class="form-control" required="required" >
-</div>
-</div>
-
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Location  </label>
-<div class="col-sm-8">
-<input type="text" name="hLocation" id="hLocation"  class="form-control" required="required" >
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Telephone Number  </label>
-<div class="col-sm-8">
-<input type="text" name="hPhone" id="hPhone"  class="form-control" required="required" placeholder="This number should be registered on mobile money">
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Custodian  </label>
-<div class="col-sm-8">
-<input type="text" name="hCustodian" id="hCustodian"  class="form-control" required="required" placeholder="custodian's Name">
-</div>
-</div>
-
-<div class="form-group">
-<label class="col-sm-2 control-label">Allowed Students  </label>
-<div class="col-sm-8">
-<select name="hGender" class="form-control" required="required">
-<option value="">Ladies</option>
-<option value="male">Gents</option>
-<option value="female" selected>Both Ladies and Gents</option>
-
+<select name="dep" value="dep" class="form-control" required="required">
+<option>hName</option>
+<option>hLocation</option>
+<option>hPhone</option>
+<option>hCustodian</option>
+<option>studentType</option>
+<option>hEmail</option>
 </select>
 </div>
 </div>
@@ -206,50 +180,71 @@
 <div class="form-group">
 <label class="col-sm-2 control-label"> Hostel Email id </label>
 <div class="col-sm-8">
-<input type="email" name="hEmail" id="hEmail"  class="form-control" onBlur="checkAvailability()" required="required">
+<input type="text" name="email" id="email"  class="form-control"  required="required">
 <span id="user-availability-status" style="font-size:12px;"></span>
 </div>
 </div>
 
 <div class="form-group">
-<label class="col-sm-2 control-label">Upload Hostel Image  </label>
+<label class="col-sm-2 control-label"> Correct Value </label>
 <div class="col-sm-8">
-<input type="file" name="hPicture" id="hPicture" accept="image/*" class="form-control" required="required">
+<input type="text" name="correct" id="correct"  class="form-control" required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
 </div>
 </div>
+
+
 <div class="col-sm-6 col-sm-offset-4">
 <input type="reset" value="Cancel" class="btn btn-primary">
 
-<input type="submit" name="register" Value="Register" class="btn btn-primary">
+<input type="submit" name="save" Value="Save" class="btn btn-primary">
 </div>
 </form><br/>
 <div>
 <?php
-if(isset($_POST['register'])){
-require_once'database.php';
-//optaining form parameters
-$hName =$_POST['hName'];
-$hLocation =$_POST['hLocation'];
-$hPhone =$_POST['hPhone'];
-$hCustodian =$_POST['hCustodian'];
-$hGender =$_POST['hGender'];
-$hEmail =$_POST['hEmail'];
-$hPicture =$_POST['hPicture'];
-
-// inserting the variables into the database
-$hInsert= mysqli_query($con,"insert into hostel(hName,hLocation,hPhone,hCustodian,studentType,hEmail,status,hPhoto) 
-values('$hName','$hLocation','$hPhone','$hCustodian','$hGender','$hEmail','pending','$hPicture')");
-if($hInsert){
-	echo"<h2 style='font-size:15pt'> Hostel ".$hName." has been registered sucessfully</h2>";
-}
-else{
-	echo"<h2 style='color:red'> Sorry! an error has occured. please try again</h2>";
-}
-}
+if(isset($_POST['save'])){
+	        require_once'database.php';
+              
+            if($_POST['dep']=="hName"){             
+		   
+                $field="hName";                 
+            }
+			
+             else if($_POST['dep']=="hLocation"){
+                $field="hLocation";
+            }
+             else if($_POST['dep']=="hPhone"){
+                $field="hPhone";
+            }
+             else if($_POST['dep']=="hCustodian"){
+                $field="hCustodian";
+                }
+            else if($_POST['dep']=="studentType"){
+                $field="studentType";
+            }
+			 else if($_POST['dep']=="hEmail"){
+                $field="hEmail";
+            }			 			 
+              $value=$_POST['correct']; 
+              $validation_email=$_POST['email']; 	   
+               
+                
+           $d=mysqli_query($con,"update hostel set $field='$value' where hostelId=$validation_email");
+              if($d){
+               echo"<br/><p style='color:blue;font-size:20pt'>the Error has been corrected. The new ".$field." is ".$value."</p>";
+              
+		   }
+		   else {			  
+		   echo"<br/><p style='color:blue;font-size:20pt'>Failed to edit the mistake.</p>";
+		   }		   
+       }   
+       
 ?>
-</div>
-
-</div>
+   </div>
+    <!-- Main content -->
+    <section class="content">
+	<!--Put your page content here-->	
+     
 
     </section>
     <!-- /.content -->
