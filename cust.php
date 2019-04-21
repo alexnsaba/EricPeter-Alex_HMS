@@ -1,6 +1,14 @@
 <?php
 session_start();
+<<<<<<< HEAD
 require_once'database.php';
+=======
+
+require_once("database.php");
+if(!$con) {
+die('Could not connect: ' . mysql_error());
+}
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
 
 // REGISTER USER
 if (isset($_POST['cust'])) {
@@ -15,6 +23,7 @@ if (isset($_POST['cust'])) {
   $address = $_POST['address'];
   $plot = $_POST['plot'];
   $image =$_POST['image'];
+<<<<<<< HEAD
   $street =  $_POST['street']; 
     $results = mysqli_query($con,"insert into Custodian(FirstName,LastName,Username,Gender,HostelEmail,PhoneNumber,Password,HostelSuburbAddress,HostelStreetAddress,HostelPlotNumber,image) 
 	VALUES('$firstname','$lastname','$username','$gender','$email','$phone','$password','$address','$street','$plot','$image')");
@@ -29,6 +38,30 @@ if (isset($_POST['cust'])) {
   
 
 }
+=======
+  $street =  $_POST['street'];
+
+
+ 
+  // Finally, register user if there are no errors in the form
+ 
+    //$password = md5($password_1);//encrypt the password before saving in the database
+
+  # code...
+    //$sql = ;
+    $results =mysqli_query($con,"INSERT INTO Custodian(FirstName ,LastName,Username,Gender,HostelEmail,PhoneNumber,Password,HostelSuburbAdress,HostelStreetAddress,HostelPlotNumber,image) VALUES('$firstname','$lastname','$username','$gender','$email','$phone','$password','$address','$street','$plot','$image')");
+    
+    
+      if ($results) {
+        # code...
+        $_SESSION['username'] = $username;
+        $_SESSION['success'] = "You are now logged in";
+       header('location: index.php');
+      }else{
+        echo "<p>Error</p>";
+      }
+  }
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
 ?>
 <!DOCTYPE htm>
 <html lang="en">
@@ -41,7 +74,11 @@ if (isset($_POST['cust'])) {
     <meta name="keywords" content="Colorlib Templates">
 
     <!-- Title Page-->
+<<<<<<< HEAD
     <title>Hostel Manager|Kampala</title>
+=======
+    <title>Hostel Management</title>
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
 
     <!-- Icons font CSS-->
     <link href="vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -68,17 +105,29 @@ if (isset($_POST['cust'])) {
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title">Custodian Registration</h2>
+<<<<<<< HEAD
                     <form method="POST" action="cust.php">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">First name</label>
+=======
+                    <form method="POST" name="form" action="cust.php">
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">first name</label>
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
                                     <input class="input--style-4" type="text" name="first_name" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
+<<<<<<< HEAD
                                     <label class="label">Last name</label>
+=======
+                                    <label class="label">last name</label>
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
                                     <input class="input--style-4" type="text" name="last_name" required="required">
                                 </div>
                             </div>
@@ -154,8 +203,19 @@ if (isset($_POST['cust'])) {
                        
                          <div class="row row-space">
                              <div class="input-group">
+<<<<<<< HEAD
                             
                            
+=======
+                            <label class="label">SignUp Type</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="subject" onChange="go()">
+                                    <option onclick="myFunction()" >Student</option>
+                                    <option disabled="disabled" selected="selected"  >Custodian</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
 
                         </div>
                             <div class="col-2">

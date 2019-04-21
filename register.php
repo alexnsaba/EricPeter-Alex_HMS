@@ -34,6 +34,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
 	
@@ -41,13 +42,22 @@
 		
             <div class="card card-4">			
                 <div class="card-body">	               			   
+=======
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
                     <h2 class="title">Student Registration</h2>
                     <form method="POST" action="">
                     	
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
+<<<<<<< HEAD
 								
+=======
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
                                     <label class="label">first name</label>
                                     <input class="input--style-4" type="text" name="first_name" required="required">
                                 </div>
@@ -114,7 +124,17 @@
                             </div>
                         </div>
                         <div class="row row-space">
+<<<<<<< HEAD
                             
+=======
+                            <label class="label">SignUp Type</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="subject" onChange="go()">
+                                    <option  selected="selected" >Student</option>
+                                    <option onclick="myFunction();">Custodian</option>
+                                </select>                                <div class="select-dropdown"></div>
+                            </div>
+>>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Username</label>
