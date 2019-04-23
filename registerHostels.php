@@ -122,8 +122,8 @@
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="registerHostels.php"><i class="fa fa-hotel"></i>New Hostel details </a></li>
-            <li><a href="#"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>			
-			<li><a href="#"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
+            <li><a href="editHostelDetails.php"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>			
+			<li><a href="viewHostelProfile.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
           </ul>
 		  
         </li>
@@ -158,7 +158,7 @@
 	<!--Put your page content here-->	
      <h2>Fill all the fields</h2>	
     						<div class="panel-body">
-			<form method="post" action="registerHostels.php" name="registration" class="form-horizontal">
+	<form method="post" action="registerHostels.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
 											
 										
 
@@ -195,9 +195,9 @@
 <label class="col-sm-2 control-label">Allowed Students  </label>
 <div class="col-sm-8">
 <select name="hGender" class="form-control" required="required">
-<option value="">Ladies</option>
+<option value="Ladies">Ladies</option>
 <option value="male">Gents</option>
-<option value="female" selected>Both Ladies and Gents</option>
+<option value="Male-and-Female" selected>Both Ladies and Gents</option>
 
 </select>
 </div>
@@ -214,7 +214,7 @@
 <div class="form-group">
 <label class="col-sm-2 control-label">Upload Hostel Image  </label>
 <div class="col-sm-8">
-<input type="file" name="hPicture" id="hPicture" accept="image/*" class="form-control" required="required">
+<input type="file" name="image"   class="form-control" required="required">
 </div>
 </div>
 <div class="col-sm-6 col-sm-offset-4">
@@ -226,24 +226,36 @@
 <div>
 <?php
 if(isset($_POST['register'])){
-require_once'database.php';
-//optaining form parameters
-$hName =$_POST['hName'];
-$hLocation =$_POST['hLocation'];
-$hPhone =$_POST['hPhone'];
-$hCustodian =$_POST['hCustodian'];
-$hGender =$_POST['hGender'];
-$hEmail =$_POST['hEmail'];
-$hPicture =$_POST['hPicture'];
-// inserting the variables into the database
-$hInsert= mysqli_query($con,"insert into hostel(hName,hLocation,hPhone,hCustodian,studentType,hEmail,hPhoto) 
-values('$hName','$hLocation','$hPhone','$hCustodian','$hGender','$hEmail','$hPicture')");
-if($hInsert){
-	echo"<p style='font-size:15pt'> Hostel ".$hName." has been registered sucessfully</p>";
-}
-else{
-	echo"<h2 style='color:red'> Sorry! an error has occured. please try again</h2>";
-}
+        require_once'database.php';
+        //optaining form parameters
+        $hName =$_POST['hName'];
+        $hLocation =$_POST['hLocation'];
+        $hPhone =$_POST['hPhone'];
+        $hCustodian =$_POST['hCustodian'];
+        $hGender =$_POST['hGender'];
+        $hEmail =$_POST['hEmail'];
+        //$gender = $_POST['hGender'];
+     
+     if (getimagesize($_FILES['image']['tmp_name']) == FALSE) {
+       # code...
+      echo "Please select an image.";
+     }else{
+          $image = addslashes($_FILES['image']['tmp_name']);
+          $name = addslashes($_FILES['image']['name']);
+          $image = file_get_contents($image);
+          $image =base64_encode($image);
+          $qry = "INSERT INTO hostel(hName,hLocation,hPhone,hCustodian,studentType,hEmail,name,image,status) 
+          VALUES('$hName','$hLocation','$hPhone','$hCustodian','$hGender','$hEmail','$name','$image','pending')";
+          $result = mysqli_query($con,$qry);
+          if ($result) {
+            # code...
+            echo "<br/>Inserted successfully..";
+          }else{
+        echo "<br/>Image not uploaded";
+        }
+        
+          mysqli_close($con);
+      }
 }
 ?>
 </div>
