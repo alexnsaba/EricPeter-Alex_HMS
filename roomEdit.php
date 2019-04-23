@@ -84,13 +84,26 @@ session_start();
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Custodian's name</span>
+              <span class="hidden-xs">
+			  <?php
+			  require_once'database.php';
+			  $user=$_SESSION['login_user'];
+			  $a= mysqli_query($con,"select * from custodian where Username='$user'");
+			  $rw = mysqli_fetch_array($a);
+			  echo $rw['LastName']." ".$rw['FirstName'];
+			  echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
+			  mysqli_close($con);
+			  ?>
+			  </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+			   <?php	  
+			  
+			  echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
+			  
+			  ?>
 
                 <p>
                   custodian

@@ -1,9 +1,12 @@
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <title>Hostel Manager | Kampala</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- DataTables -->
   <link rel="stylesheet" href="../../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <!-- Tell the browser to be responsive to screen width -->
@@ -21,7 +24,6 @@
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
   <!-- Morris chart -->
   <link rel="stylesheet" href="bower_components/morris.js/morris.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <!-- jvectormap -->
   <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
   <!-- Date Picker -->
@@ -43,88 +45,14 @@
   <link rel="stylesheet" href="css/style.css">
   <style>
   @media screen and (min-width:720px){
-  td.h1{
-  margin-left: 30%; 
-  }
+	td.h1{
+	margin-left: 30%;	
+	}
 }
  @media screen and (min-width:720px){
-  .box{
-  
-  }
-}
-.card {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  margin: auto;
-  text-align: center;
-  font-family: arial;
-}
-
-.price {
-  color: grey;
-  font-size: 22px;
-}
-
-.card button {
-  border: none;
-  outline: 0;
-  padding: 12px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
-.card-deck{
-    bottom-margin:10px;
-}
-
-/* responsively enforce wrapping */
-.card-deck span {
-      display: none;
-}
-
-@media (min-width:1200px){
-    .card-deck span:nth-of-type(5n) {
-      display: block;
-      width: 100%;
-    }
-    
-}
-@media (min-width:992px) and (max-width: 1199px) {
-   .card-deck span:nth-of-type(4n) {
-      display: block;
-      width: 100%;
-    }
-    
-}
-@media (min-width:768px) and (max-width: 991px) {
-    .card-deck span:nth-of-type(3n) {
-      display: block;
-      width: 100%;
-    }
-}
-@media (min-width: 576px) and (max-width: 767px) {
-    .card-deck span:nth-of-type(2n) {
-      display: block;
-      width: 100%;
-    }
-}
-
-
-/* add css for margin fix -- this will not be needed after beta */
-.card-deck .card {
-    margin-left: 15px;
-    margin-right: 15px;
-}
-
-.card-deck .card:not(:last-child) {
-    margin-right: 15px;
-}
-
-.card-deck .card:not(:first-child) {
-    margin-left: 15px;
+	.box{
+	
+	}
 }
   </style>
 </head>
@@ -153,7 +81,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Custodian's name</span>
+              <span class="hidden-xs">Student's name</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -161,14 +89,13 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                 <p>
-                  custodian
-                  
+                  Student
                 </p>
               </li>                          
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
+                  <a href="logout.php" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
                 </div>
                 <div class="pull-right">
                   <a href="#" class="btn btn-primary"><i class="fa fa-window-close" style="font-size:30px"></i> Cancel</a>
@@ -187,72 +114,82 @@
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">CUSTODIAN'S DASH BOARD</li>
+        <li class="header">STUDENT'S DASH BOARD</li>
         <li class="active treeview">
           <a href="#">
-            <i class="fa fa-home" style="font-size:25px"></i> <span>HOSTEL REGISTRATION</span>
+            <i class="fa fa-home" style="font-size:25px"></i> <span>HOSTELS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right" ></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="AdminHomepage.php"><i class="fa fa-hotel"></i>New Hostel details </a></li>     
-      <li><a href="ViewHostel.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
+            
+            <li><a href="ViewHostel.php"><i class="fa fa-edit"></i> View Hostel Rooms </a></li>
           </ul>
-      
+		  
         </li>
-    
-      <li class="active treeview">
+		
+		  <li class="active treeview">
           <a href="#">
-            <i class="fa fa-desktop" style="font-size:20px"></i> <span>UPDATES</span>
+            <i class="fa fa-desktop" style="font-size:20px"></i> <span>Comments</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-      <li><a href="#"><i class="fa fa-newspaper-o"></i>View your Updates</a></li>          
-       </ul>
-      
+            
+            <li><a href="comments.php"><i class="fa fa-trash-o"></i> Comment</a></li>
+								
+		   </ul>
+		  
         </li>
-    
-    </ul>
+		
+		</ul>
     </section>
     <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <!-- Content Header (Page header) -->  
-      <div class="row">
-     <?php   
+    <!-- Content Header (Page header) -->
+    
+    <!-- Main content -->
+    <section class="content">
+	<!--Put your page content here-->	
+     <div class="card-deck">  
+	<?php   
       require_once('database.php');
 
-      $query = "SELECT * FROM hostel ";
+
+      $query = "SELECT * FROM room WHERE roomStatus='Free'";
           $result  = mysqli_query($con,$query);
           while($row = mysqli_fetch_array($result)){
             # code...
-            echo '<div class="card-deck">';
-            echo '<div class="columns">';
-            echo '<div class="card mb-r" >';
-            echo '<img height="300" width="300" src="data:image;base64,'.$row['image'].'" >';
-            echo'<h1>Tailored Jeans</h1>';
-            echo'<p class="price">$19.99</p>';
-            echo'<p>Some text about the jeans..</p>';
-            echo'<p><button>Add to Cart</button></p>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
+            //echo'';
+			$id= $row['hostelId'];
+             $b=mysqli_query($con,"select * from hostel where hostelId='$id'");
+			 $rw= mysqli_fetch_array($b);
+            echo'<div class="card"  style="width: 18rem;">';
+            echo '<img class="card-img-top" width="286" height="180"  src="data:image;base64, '.$row['roomImage'].'" >';
+            echo '<div class="card-body">';
             
-            echo '<br/>';
+            echo '<p><label>Hostel Name:</label> '.$rw['hName'].'</p>';
+            echo '<p><label>roomCategory:</label> '.$row['roomCategory'].'</p>';
+            echo '<p><label>Floor:</label> '.$row['roomFloor'].'</p>';
+            echo '<p><label>Price:</label> UGX '.number_format($row['roomPrice']).'</p>';           
+            //echo '<div class="card-footer">';
+            echo '<a href="book.php"><input class="btn btn-success" type="button" value="Book Now"></a>';
+           // echo '<button class="btn btn-danger">Details</button>';
+           // echo '</div>';
+            echo '</div>';
+            echo '</div>';
+           // echo '</div>';
 
             }
+
+
     ?>
-  
-  
-    <!-- Main content -->
-    <section class="content">
-  <!--Put your page content here--> 
-     
+    </div>
 
     </section>
     <!-- /.content -->
@@ -262,7 +199,7 @@
         
     <!-- Default to the left -->
     <strong><center>Copyright &copy; 2019 Hostel Manager.</strong> All rights reserved.</center>
-  </footer>
+	</footer>
 
 
   <!-- /.control-sidebar -->
@@ -328,4 +265,7 @@
   })
 </script>
 </body>
-</html>
+</html> ';
+
+
+

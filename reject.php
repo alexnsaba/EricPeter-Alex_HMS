@@ -8,7 +8,7 @@
 		# code...
 		$reject = "Rejected";
 		$Id = $_GET['Reject'];
-		$sql = "UPDATE hostel SET status='Rejected' WHERE hostelId=$Id";
+		$sql = "UPDATE hostel SET status='rejected' WHERE hostelId=$Id";
 
 		$result = mysqli_query($con,$sql);
 		if (!$result) {
@@ -24,7 +24,7 @@
 		# code...
 		//$reject = "Rejected";
 		$Id = $_GET['Approve'];
-		$sql = "UPDATE hostel SET status='Approved' WHERE hostelId=$Id";
+		$sql = "UPDATE hostel SET status='approved' WHERE hostelId=$Id";
 
 		$result = mysqli_query($con,$sql);
 		if (!$result) {

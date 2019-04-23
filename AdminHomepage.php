@@ -1,4 +1,10 @@
-<!DOCTYPE html>
+<?php
+session_start();
+			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){
+			}else{
+			 header("location:index.php");	
+			}			
+ ?>	
 <html>
 <head>
   <meta charset="utf-8">
@@ -93,7 +99,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
+                  <a href="logout.php" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
                 </div>
                 <div class="pull-right">
                   <a href="#" class="btn btn-primary"><i class="fa fa-window-close" style="font-size:30px"></i> Cancel</a>
@@ -152,7 +158,7 @@
      <?php   
    require_once 'database.php';
    
-   $sel = mysqli_query($con,"select * from hostel");
+   $sel = mysqli_query($con,"select * from hostel where status='pending'");
 
     
     

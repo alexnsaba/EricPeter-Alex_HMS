@@ -15,7 +15,10 @@ if (isset($_POST['reg_user'])) {
   $password  = mysqli_real_escape_string($con, $_POST['password']);
   $country = mysqli_real_escape_string($con, $_POST['country']);
   $username = mysqli_real_escape_string($con, $_POST['username']);
-
+$image = addslashes($_FILES['image']['tmp_name']);
+$name = addslashes($_FILES['image']['name']);
+$image = file_get_contents($image);
+$image =base64_encode($image);
 
   
 
@@ -25,7 +28,7 @@ if (isset($_POST['reg_user'])) {
 
   # code...
 
-    $query = "INSERT INTO Student(FirstName, LastName, District,Gender ,Email,Phone_Number ,Password,Country,Username)VALUES('$firstname','$lastname','$district','$gender','$email','$phone','$password','$country','$username')";
+    $query = "INSERT INTO Student(FirstName, LastName, District,Gender ,Email,Phone_Number ,Password,Country,Username,name,image)VALUES('$firstname','$lastname','$district','$gender','$email','$phone','$password','$country','$username','$name','$image')";
     $result =mysqli_query($con, $query);
     
     if ($result) {

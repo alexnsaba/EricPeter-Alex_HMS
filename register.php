@@ -1,5 +1,4 @@
-<?php include('server.php') ?>
-<!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -34,7 +33,7 @@
 </head>
 
 <body>
-<<<<<<< HEAD
+
     
     <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
 	
@@ -42,22 +41,17 @@
 		
             <div class="card card-4">			
                 <div class="card-body">	               			   
-=======
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
-        <div class="wrapper wrapper--w680">
-            <div class="card card-4">
-                <div class="card-body">
->>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
+
+
                     <h2 class="title">Student Registration</h2>
-                    <form method="POST" action="">
+                    <form method="POST" enctype="multipart/form-data" action="register.php" >
                     	
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-<<<<<<< HEAD
+
 								
-=======
->>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
+
                                     <label class="label">first name</label>
                                     <input class="input--style-4" type="text" name="first_name" required="required">
                                 </div>
@@ -124,24 +118,22 @@
                             </div>
                         </div>
                         <div class="row row-space">
-<<<<<<< HEAD
-                            
-=======
-                            <label class="label">SignUp Type</label>
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="subject" onChange="go()">
-                                    <option  selected="selected" >Student</option>
-                                    <option onclick="myFunction();">Custodian</option>
-                                </select>                                <div class="select-dropdown"></div>
-                            </div>
->>>>>>> 0aa37e175676fee83d40b37abac3fbaeaf2d75b6
+
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Username</label>
                                     <input class="input--style-4" type="text" name="username" required="required">
                                 </div>
                             </div>
+							 <div class="col-2">
+                                <div class="input-group">
+                                     Select image to upload:
+                                    <input type="file" accept="image/*" name="image" id="fileToUpload">
+                                    
+                                </div>
+                            </div>
                         </div>
+						
                         <div class="p-t-15">
 
                             <button class="btn btn--radius-2 btn--blue" type="submit" name="reg_user" id="submit">Submit</button>
@@ -150,6 +142,56 @@
                         </div>
                     </form>
                 </div>
+				<div>
+				<?php		
+
+
+// REGISTER USER
+if (isset($_POST['reg_user'])) {
+	// connect to the database
+require_once 'database.php';
+  // receive all input values from the form
+  $firstname = mysqli_real_escape_string($con, $_POST['first_name']);
+  $lastname = mysqli_real_escape_string($con, $_POST['last_name']);
+  $district = mysqli_real_escape_string($con, $_POST['district']);
+  $gender = mysqli_real_escape_string($con, $_POST['gender']);
+  $email = mysqli_real_escape_string($con, $_POST['email']);
+  $phone = mysqli_real_escape_string($con, $_POST['phone']);
+  $password  = mysqli_real_escape_string($con, $_POST['password']);
+  $country = mysqli_real_escape_string($con, $_POST['country']);
+  $username = mysqli_real_escape_string($con, $_POST['username']);
+ $image = addslashes($_FILES['image']['tmp_name']);
+ $name = addslashes($_FILES['image']['name']);
+ $image = file_get_contents($image);
+ $image =base64_encode($image);
+
+  
+
+  // Finally, register user if there are no errors in the form
+ 
+    //$password = md5($password_1);//encrypt the password before saving in the database
+
+  # code...
+
+    $query = "INSERT INTO Student(FirstName, LastName, District,Gender ,Email,Phone_Number ,Password,Country,Username,name,image)VALUES('$firstname','$lastname','$district','$gender','$email','$phone','$password','$country','$username','$name','$image')";
+    $result =mysqli_query($con, $query);
+    
+    if ($result) {      
+      //header('location: index.php');
+	  $URL="index.php";
+			 echo "<script>window.location.href = '{$URL}';</script>";
+			 echo'<META HTTP-EQUIV = "refresh" content="0;URL=' .$URL . ' ">';
+			 exit();
+    }else{
+      echo "<h2>Failed to register. please Try again.</h2>";
+    }
+}
+
+
+
+
+  ?>
+				</div>
             </div>
         </div>
     </div>

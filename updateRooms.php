@@ -1,6 +1,6 @@
 <?php
 session_start();
-			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){
+			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){				
 			}else{
 			 header("location:index.php");	
 			}
@@ -83,14 +83,29 @@ session_start();
 
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Custodian's name</span>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">	
+              
+              <span class="hidden-xs">
+			  <?php
+			  require_once'database.php';
+			  $user=$_SESSION['login_user'];
+			  $a= mysqli_query($con,"select * from custodian where Username='$user'");
+			  $rw = mysqli_fetch_array($a);
+			  echo $rw['LastName']." ".$rw['FirstName'];
+			  echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
+			  
+			  ?>
+			  </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+			   <?php	  
+			  
+			  echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
+			  
+			  ?>
+                
 
                 <p>
                   custodian
@@ -165,7 +180,7 @@ session_start();
 	<!--Put your page content here-->	
      <h2>Fill all the fields to update  Room details</h2>	
     						<div class="panel-body">
-			<form method="post" action="updateRooms.php" name="registration" class="form-horizontal">
+			<form method="post" action="updateRooms.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
 											
 										
 
@@ -212,7 +227,7 @@ session_start();
 <div class="form-group">
 <label class="col-sm-2 control-label">Upload Room Image  </label>
 <div class="col-sm-8">
-<input type="file" name="rPicture" id="rPicture" accept="image/*" class="form-control" required="required">
+<input type="file" name="image"   class="form-control" required="required">
 </div>
 </div>
 <div class="col-sm-6 col-sm-offset-4">
@@ -231,24 +246,37 @@ $rCategory =$_POST['rCategory'];
 $rFloor =$_POST['rFloor'];
 $rPrice =$_POST['rPrice'];
 $hId =$_POST['hId'];
-$rPicture =$_POST['rPicture'];
+
+if (getimagesize($_FILES['image']['tmp_name']) == FALSE) {
+       # code...
+      echo "Please select an image.";
+     }else{
+          $image = addslashes($_FILES['image']['tmp_name']);
+          $name = addslashes($_FILES['image']['name']);
+          $image = file_get_contents($image);
+	      $image =base64_encode($image);
+	 }
+//$rPicture =$_POST['rPicture'];
 $roomStatus="Free";
 // checking if the hostel is registered
-$sel= mysqli_query($con,"select * from hostel where hostelId='$hId'");
+$sel= mysqli_query($con,"select * from hostel where hostelId='$hId' ");
 $row = mysqli_fetch_array($sel);
 $num= mysqli_num_rows($sel);
 if($num == 1){
-	if($row['status']=="approved"){
-	
-	//inserting values into table roomEdit
-	$insert= mysqli_query($con,"insert into room(roomNumber,roomCategory,roomFloor,roomPrice,roomStatus,hostelId,roomImage)
-	values('$rNumber','$rCategory','$rFloor','$rPrice','$roomStatus','$hId','$rPicture')");
+	if($row['status']=="approved"){         
+       //inserting values into table room
+	$insert= mysqli_query($con,"insert into room(roomNumber,roomCategory,roomFloor,roomPrice,roomStatus,hostelId,name,roomImage)
+	values('$rNumber','$rCategory','$rFloor','$rPrice','$roomStatus','$hId','$name','$image')");
 	if($insert){
 		echo"<h3 style='color:blue'> Data saved successfully. Room ".$rNumber." is Now ready to be booked by students</h3>";
 	}
 	else{
 		echo"<h3 style='color:red'> Sorry, An error has occured while saving the data. please again</h3>";
 	}
+      
+		
+	
+	
 	}
 	else{
 		echo"<h3 style='color:red'> Hostel  ".$row['hName']." is not Approved by the Admin. Contact the Admin for Approval </h3>";
