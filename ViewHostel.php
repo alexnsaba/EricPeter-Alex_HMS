@@ -1,3 +1,11 @@
+<?php
+session_start();
+     if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){       
+      }else{
+      header("location:index.php");  
+      }
+      
+ ?> 
 <html>
 <head>
   <meta charset="utf-8">
@@ -78,20 +86,36 @@
         <ul class="nav navbar-nav">         
 
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Student's name</span>
+        <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+              
+              <span class="hidden-xs">
+        <?php
+        require_once'database.php';
+        $user=$_SESSION['login_user'];
+        $a= mysqli_query($con,"select * from Student where Username='$user'");
+        $rw = mysqli_fetch_array($a);
+        echo $rw['LastName']." ".$rw['FirstName'];
+        echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
+        
+        ?>
+        </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+         <?php    
+        
+        echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
+        
+        ?>
+                
 
                 <p>
                   Student
+                  
                 </p>
-              </li>                          
+              </li>                                          
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -117,28 +141,28 @@
         <li class="header">STUDENT'S DASH BOARD</li>
         <li class="active treeview">
           <a href="#">
-            <i class="fa fa-home" style="font-size:25px"></i> <span>HOSTELS</span>
+            <i class="fa fa-home" style="font-size:25px"></i> <span>BOOKING</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right" ></i>
             </span>
           </a>
           <ul class="treeview-menu">
             
-            <li><a href="ViewHostel.php"><i class="fa fa-edit"></i> View Hostel Rooms </a></li>
+            <li><a href="ViewHostel.php"><i class="fa fa-desktop"></i> View Hostel Rooms </a></li>
           </ul>
 		  
         </li>
 		
 		  <li class="active treeview">
           <a href="#">
-            <i class="fa fa-desktop" style="font-size:20px"></i> <span>Comments</span>
+            <i class="fa fa-commenting" style="font-size:20px"></i> <span>COMMENTS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             
-            <li><a href="comments.php"><i class="fa fa-trash-o"></i> Comment</a></li>
+            <li><a href="studentComments.php"><i class="fa fa-edit"></i> Comment</a></li>
 								
 		   </ul>
 		  
@@ -148,53 +172,54 @@
     </section>
     <!-- /.sidebar -->
   </aside>
-
-  <!-- Content Wrapper. Contains page content -->
+ <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    
-    <!-- Main content -->
-    <section class="content">
-	<!--Put your page content here-->	
-     <div class="card-deck">  
-	<?php   
+    <div class="col-md-8">  
+        <div class="row">
+          <div class="col-md-12 col-xs-12" id="product_msg">
+          </div>
+        </div>
+        <div class="panel panel-info" id="scroll">
+          <div class="panel-heading">Please book the room you like</div>
+          <div class="panel-body">
+            <div id="get_product">
+              <!--Here we get product jquery Ajax Request-->
+            </div>
+            <?php   
       require_once('database.php');
 
 
-      $query = "SELECT * FROM room WHERE roomStatus='Free'";
+      $query = "SELECT * FROM Room WHERE roomStatus='Free' ";
           $result  = mysqli_query($con,$query);
           while($row = mysqli_fetch_array($result)){
-            # code...
-            //echo'';
-			$id= $row['hostelId'];
-             $b=mysqli_query($con,"select * from hostel where hostelId='$id'");
-			 $rw= mysqli_fetch_array($b);
-            echo'<div class="card"  style="width: 18rem;">';
-            echo '<img class="card-img-top" width="286" height="180"  src="data:image;base64, '.$row['roomImage'].'" >';
-            echo '<div class="card-body">';
-            
-            echo '<p><label>Hostel Name:</label> '.$rw['hName'].'</p>';
-            echo '<p><label>roomCategory:</label> '.$row['roomCategory'].'</p>';
-            echo '<p><label>Floor:</label> '.$row['roomFloor'].'</p>';
-            echo '<p><label>Price:</label> UGX '.number_format($row['roomPrice']).'</p>';           
-            //echo '<div class="card-footer">';
-            echo '<a href="book.php"><input class="btn btn-success" type="button" value="Book Now"></a>';
-           // echo '<button class="btn btn-danger">Details</button>';
-           // echo '</div>';
-            echo '</div>';
-            echo '</div>';
-           // echo '</div>';
+            $hd=$row["hostelId"];
+            $qr =mysqli_query($con,"SELECT * FROM hostel WHERE hostelId='$hd' ");
+            $rw= mysqli_fetch_array($qr)
+            ?>
+                     
+                      <div class="col-md-4">
+                        <?php echo '<img style="float:left;width:250px; height:160px;" src="data:image;base64,'.$row['roomImage'].'" class="img-responsive img-thumbnail"/>'; ?>
+                        <div class="panel-heading">
+                        <table>
+                          <tr><td>Hostel Name:</td><td><b><?php echo $rw["hName"]; ?></b> </td></tr>
+                          <tr><td>RoomId:</td><td><b><?php echo $row["RoomId"]; ?></b> </td></tr>
+                          <tr><td>Floor:</td><td><b><?php echo $row["roomFloor"]; ?></b></td></tr>
+                          <tr><td>Price:</td><td> <b>  <?php echo "UGX:". number_format($row["roomPrice"]); ?></b></td></tr>
 
-            }
+                          <tr><td><a href="book.php"><input class="btn btn-success" type="button" value="Book Now"></a></td></tr><br>
+                        </table><br><br><br>
+                      </div>
+                      </div>
+        <?php }
 
 
     ?>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-1"></div>
     </div>
-
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
   <footer class="main-footer">
         
     <!-- Default to the left -->

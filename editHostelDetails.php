@@ -89,7 +89,7 @@ session_start();
 			  <?php
 			  require_once'database.php';
 			  $user=$_SESSION['login_user'];
-			  $a= mysqli_query($con,"select * from custodian where Username='$user'");
+			  $a= mysqli_query($con,"select * from Custodian where Username='$user'");
 			  $rw = mysqli_fetch_array($a);
 			  echo $rw['LastName']." ".$rw['FirstName'];
 			  echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
@@ -127,7 +127,7 @@ session_start();
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+    <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">         
       <!-- /.search form -->
@@ -143,13 +143,13 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="registerHostels.php"><i class="fa fa-hotel"></i>New Hostel details </a></li>
-            <li><a href="editHostelDetails.php"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>			
-			<li><a href="viewHostelProfile.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
+            <li><a href="editHostelDetails.php"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>      
+      <li><a href="viewHostelProfile.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
           </ul>
-		  
+      
         </li>
-		
-		  <li class="active treeview">
+    
+      <li class="active treeview">
           <a href="#">
             <i class="fa fa-desktop" style="font-size:20px"></i> <span>UPDATES</span>
             <span class="pull-right-container">
@@ -159,12 +159,26 @@ session_start();
           <ul class="treeview-menu">
             <li class="active"><a href="updateRooms.php"><i class="fa fa-circle-o"></i> Update Room details</a></li>
             <li><a href="roomEdit.php"><i class="fa fa-trash-o"></i> Edit Room Details</a></li>
-			<li><a href="viewRoomUpdates.php"><i class="fa fa-newspaper-o"></i>View your pdates</a></li>					
-		   </ul>
-		  
+      <li><a href="viewRoomUpdates.php"><i class="fa fa-newspaper-o"></i>View your pdates</a></li>          
+       </ul>
+      
         </li>
-		
-		</ul>
+
+     <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-commenting" style="font-size:20px"></i> <span>COMMENTS</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="comments.php"><i class="fa fa-edit"></i> Comments</a></li>
+                      
+       </ul>
+      
+        </li>   
+    
+    </ul>
     </section>
     <!-- /.sidebar -->
   </aside>

@@ -69,6 +69,12 @@ if (isset($_POST['cust'])) {
 
     <!-- Main CSS-->
     <link href="css/main.css" rel="stylesheet" media="all">
+    <!--style for indicating the password strength-->
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!--styles for telephone-->
+ <link rel="stylesheet" href="build/css/intlTelInput.css">
+ <link rel="stylesheet" href="build/css/demo.css">
    <script type="text/javascript">
         function myFunction() {
           location.replace("register.php")
@@ -87,14 +93,14 @@ if (isset($_POST['cust'])) {
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">First name</label>
+                                    <label class="label" style="color: black;font-size: 17px">First name</label>
 
                                     <input class="input--style-4" type="text" name="first_name" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                       <label class="label">Last name</label>                                  
+                       <label class="label" style="color: black;font-size: 17px">Last name</label>                                  
 
                                     
                                     <input class="input--style-4" type="text" name="last_name" required="required">
@@ -104,7 +110,7 @@ if (isset($_POST['cust'])) {
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Username</label>
+                                    <label class="label" style="color: black;font-size: 17px">Username</label>
                                     <div class="input-group-icon">
                                         <input class="input--style-4 js-datepicker" type="text" name="username" required="required">
                                         <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
@@ -113,9 +119,9 @@ if (isset($_POST['cust'])) {
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Gender</label>
+                                    <label class="label" style="color: black;font-size: 17px">Gender</label>
                                     <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Male
+                                        <label class="radio-container m-r-45" >Male
                                             <input type="radio" checked="checked" name="gender" value="Male" required="required">
                                             <span class="checkmark"></span>
                                         </label>
@@ -130,27 +136,27 @@ if (isset($_POST['cust'])) {
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Hostel Email</label>
+                                    <label class="label" style="color: black;font-size: 17px">Hostel Email</label>
                                     <input class="input--style-4" type="email" name="email" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Phone Number</label>
-                                    <input class="input--style-4" type="text" name="phone" required="required">
+                                    <label class="label" style="color: black;font-size: 17px">Phone Number</label>
+                                    <input class="input--style-4" type="text" name="phone" id="mobile-number" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Password</label>
-                                    <input class="input--style-4" type="Password" name="password">
+                                    <label class="label" style="color: black;font-size: 17px">Password</label>
+                                    <input class="input--style-4" type="Password" name="password" class="form-control" id="exampleInputPassword1" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Hostel Suburb Adress</label>
+                                    <label class="label" style="color: black;font-size: 17px">Hostel Suburb Adress</label>
                                     <input class="input--style-4" type="text" name="address" required="required">
                                 </div>
                             </div>
@@ -158,13 +164,13 @@ if (isset($_POST['cust'])) {
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Hostel Street Address</label>
+                                    <label class="label" style="color: black;font-size: 17px">Hostel Street Address</label>
                                     <input class="input--style-4" type="text" name="street" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Hostel Plot Number</label>
+                                    <label class="label" style="color: black;font-size: 17px">Hostel Plot Number</label>
                                     <input class="input--style-4" type="text" name="plot" required="required">
                                 </div>
                             </div>
@@ -193,6 +199,37 @@ if (isset($_POST['cust'])) {
             </div>
         </div>
     </div>
+     <!--script for  indicating the password strength-->
+        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="dist/jquery.passwordstrength.js"></script>
+<script>
+$('#exampleInputPassword1').passwordStrength();
+</script>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+ <!--script for telephone-->
+    <script src="build/js/intlTelInput.js"></script> 
+    <script>
+
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
+  </script>
 
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>

@@ -25,6 +25,12 @@
 
     <!-- Main CSS-->
     <link href="css/main.css" rel="stylesheet" media="all">
+    <!--style for indicating the password strength-->
+    <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <!--styles for telephone-->
+ <link rel="stylesheet" href="build/css/intlTelInput.css">
+ <link rel="stylesheet" href="build/css/demo.css">
     <script type="text/javascript">
 		function myFunction() {
 		  location.replace("cust.php")
@@ -46,19 +52,19 @@
                     <h2 class="title">Student Registration</h2>
                     <form method="POST" enctype="multipart/form-data" action="register.php" >
                     	
-                        <div class="row row-space">
+                        <div class="row row-space" >
                             <div class="col-2">
                                 <div class="input-group">
 
 								
 
-                                    <label class="label">first name</label>
+                                    <label class="label" style="color: black;font-size: 17px">first name</label>
                                     <input class="input--style-4" type="text" name="first_name" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">last name</label>
+                                    <label class="label"style="color: black;font-size: 17px">last name</label>
                                     <input class="input--style-4" type="text" name="last_name" required="required">
                                 </div>
                             </div>
@@ -66,22 +72,22 @@
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">District</label>
+                                    <label class="label" style="color: black;font-size: 17px">District</label>
                                     <div class="input-group-icon">
-                                        <input class="input--style-4 js-datepicker" type="text" name="district" required="required">
-                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                        <input  class="input--style-4" type="text" name="district" required="required">
+                                        
                                     </div>
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Gender</label>
+                                    <label class="label" style="color: black;font-size: 17px">Gender</label>
                                     <div class="p-t-10">
                                         <label class="radio-container m-r-45">Male
                                             <input type="radio" checked="checked" name="gender" value="Male">
                                             <span class="checkmark"></span>
                                         </label>
-                                        <label class="radio-container">Female
+                                        <label class="radio-container" style="color: black;font-size: 17px">Female
                                             <input type="radio" name="gender" value="Female">
                                             <span class="checkmark"></span>
                                         </label>
@@ -92,27 +98,27 @@
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Email</label>
+                                    <label class="label" style="color: black;font-size: 17px">Email</label>
                                     <input class="input--style-4" type="email" name="email" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Phone Number</label>
-                                    <input class="input--style-4" type="text" name="phone" required="required">
+                                    <label class="label" style="color: black;font-size: 17px">Phone Number</label>
+                                    <input class="input--style-4" type="tel" name="phone" id="mobile-number"  class="class="form-control" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Password</label>
-                                    <input class="input--style-4" type="Password" name="password" required="required">
+                                    <label class="label" style="color: black;font-size: 17px">Password</label>
+                                    <input class="input--style-4" type="Password" name="password" class="form-control" id="exampleInputPassword1" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Country</label>
+                                    <label class="label" style="color: black;font-size: 17px">Country</label>
                                     <input class="input--style-4" type="text" name="country" required="required">
                                 </div>
                             </div>
@@ -121,7 +127,7 @@
 
                             <div class="col-2">
                                 <div class="input-group">
-                                    <label class="label">Username</label>
+                                    <label class="label" style="color: black;font-size: 17px">Username</label>
                                     <input class="input--style-4" type="text" name="username" required="required">
                                 </div>
                             </div>
@@ -195,7 +201,27 @@ require_once 'database.php';
             </div>
         </div>
     </div>
+    <!--script for  indicating the password strength-->
+        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="dist/jquery.passwordstrength.js"></script>
+<script>
+$('#exampleInputPassword1').passwordStrength();
+</script>
+<script type="text/javascript">
 
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
@@ -205,6 +231,16 @@ require_once 'database.php';
 
     <!-- Main JS-->
     <script src="js/global.js"></script>
+    <!--script for telephone-->
+    <script src="build/js/intlTelInput.js"></script> 
+    <script>
+
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
+  </script>
 
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 

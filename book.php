@@ -1,3 +1,11 @@
+<?php
+session_start();
+     if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){       
+      }else{
+      header("location:index.php");  
+      }
+      
+ ?> 
 <html>
 <head>
   <meta charset="utf-8">
@@ -32,6 +40,9 @@
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <!--styles for telephone-->
+ <link rel="stylesheet" href="build/css/intlTelInput.css">
+ <link rel="stylesheet" href="build/css/demo.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->  
@@ -78,20 +89,36 @@
         <ul class="nav navbar-nav">         
 
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Student's name</span>
+           <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
+              
+              <span class="hidden-xs">
+        <?php
+        require_once'database.php';
+        $user=$_SESSION['login_user'];        
+        $a= mysqli_query($con,"select * from Student where Username='$user'");
+        $rw = mysqli_fetch_array($a);
+        echo $rw['LastName']." ".$rw['FirstName'];
+        echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
+        
+        ?>
+        </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+         <?php    
+        
+        echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
+        
+        ?>
+                
 
                 <p>
                   Student
+                  
                 </p>
-              </li>                          
+              </li>                                          
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
@@ -117,34 +144,34 @@
         <li class="header">STUDENT'S DASH BOARD</li>
         <li class="active treeview">
           <a href="#">
-            <i class="fa fa-home" style="font-size:25px"></i> <span>HOSTELS</span>
+            <i class="fa fa-home" style="font-size:25px"></i> <span style="font-size:17px">BOOKING</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right" ></i>
             </span>
           </a>
           <ul class="treeview-menu">
             
-            <li><a href="ViewHostel.php"><i class="fa fa-edit"></i> View Hostel Rooms </a></li>
+            <li><a href="ViewHostel.php"><i class="fa fa-desktop"></i> View Hostel Rooms </a></li>
           </ul>
-		  
+      
         </li>
-		
-		  <li class="active treeview">
+    
+      <li class="active treeview">
           <a href="#">
-            <i class="fa fa-desktop" style="font-size:20px"></i> <span>Comments</span>
+            <i class="fa fa-commenting" style="font-size:20px"></i><span style="font-size:17px">COMMENTS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
             
-            <li><a href="comments.php"><i class="fa fa-trash-o"></i> Comment</a></li>
-								
-		   </ul>
-		  
+            <li><a href="studentComments.php"><i class="fa fa-edit"></i> Comment</a></li>
+                
+       </ul>
+      
         </li>
-		
-		</ul>
+    
+    </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -160,30 +187,25 @@
 <form method="post" action="book.php" enctype="multipart/form-data" name="registration" class="form-horizontal">								
 
 <div class="form-group">
-<label class="col-sm-2 control-label"> Hostel Name  </label>
+<label class="col-sm-2 control-label"> Room Number </label>
 <div class="col-sm-8">
-<input type="text" name="hName" id="hName"  class="form-control" required="required" >
+<input type="number" name="rnumber" id="rnumber"  class="form-control" required="required" placeholder="Enter the room number You liked" >
 </div>
 </div>
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Username </label>
-<div class="col-sm-8">
-<input type="text" name="username" id="username" class="form-control" required="required" >
-</div>
-</div>
 
-<div class="form-group">
-<label class="col-sm-2 control-label">Room Number</label>
-<div class="col-sm-8">
-<input type="text" name="Room" id="Room"  class="form-control" required="required" >
-</div>
-</div>
 
 <div class="form-group">
 <label class="col-sm-2 control-label">Telephone Number</label>
 <div class="col-sm-8">
-<input type="text" name="hPhone" id="hPhone"  class="form-control" required="required" placeholder="This number should be registered on mobile money">
+<input type="text" name="hPhone" id="mobile-number"  class="form-control" required="required" placeholder="This number should be registered on mobile money">
+</div>
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label"> Amount</label>
+<div class="col-sm-8">
+<input type="number" name="bAmount" id="bAmount"  class="form-control" placeholder="booking should not be less than 200,000/=" required="required">
+<span id="user-availability-status" style="font-size:12px;"></span>
 </div>
 </div>
 
@@ -194,13 +216,7 @@
 </div>
 </div>
 
-<div class="form-group">
-<label class="col-sm-2 control-label"> Email</label>
-<div class="col-sm-8">
-<input type="email" name="email" id="email"  class="form-control" onBlur="checkAvailability()" required="required">
-<span id="user-availability-status" style="font-size:12px;"></span>
-</div>
-</div>
+
 <div class="col-sm-6 col-sm-offset-4">
 <input type="reset" value="Cancel" class="btn btn-primary">
 
@@ -209,47 +225,80 @@
 </form><br/>
 <div>
 </div>
-<?php 
-require_once("database.php");
-if (isset($_POST['book'])) {
-	# code...
-$hName = $_POST['hName'];
-$username =$_POST['username'];
-$hPhone =$_POST['hPhone'];
-$Room = $_POST['Room'];
-$date  = $_POST['date'];
-$email = $_POST['email'];
-
-//
-
-$query = "SELECT * FROM Student WHERE Username='$username'";
-
-$result  = mysqli_query($con,$query);
-$num= mysqli_num_rows($result);
-if ($num == 1) {
-	# code...
-	$query1 = "SELECT * FROM hostel WHERE hName='$hName' ";
-	$result1 = mysqli_query($con,$query1);
-	$num1= mysqli_num_rows($result1);
-	if ($num1 == 1) {
-		# code...
-		$query2 = "UPDATE hostel SET status='Booked' WHERE hName='$hName'";
-		$result2 = mysqli_query($con,$query2); 
-		if ($result2) {
-			# code...
-			echo "<p>Updated successfully</p>";
-
-		}else{
-			echo "<p>Failed.....</p>";
-		}
-}else{
-	echo "<p>Username if Incorrect</p>";
+<?php
+require_once'database.php';
+if(isset($_POST['book'])){
+  //obtaining form values
+  $rnumber =$_POST['rnumber'];
+  $hPhone =$_POST['hPhone'];
+  $bAmount =$_POST['bAmount'];
+  $date =$_POST['date'];
+  $a= mysqli_query($con,"select ref from reference");
+  $ro= mysqli_fetch_array($a);
+  $refer=$ro['ref'] +1;
+  if($bAmount >= 500){
+    //using the api to pay
+  $url = 'https://www.easypay.co.ug/api/'; 
+ $payload = array( 'username' => '7d3aebb7215ee345', 
+ 'password' => '0a769e3809ff1552', 
+ 'action' => 'mmdeposit', 
+ 'amount' => $bAmount, 
+ 'phone'=>'$hPhone', 
+ 'currency'=>'UGX', 
+ 'reference'=>$refer, 
+ 'reason'=>'Booking' 
+ ); 
+  
+ //open connection 
+ $ch = curl_init(); 
+  
+ //set the url, number of POST vars, POST data 
+ curl_setopt($ch,CURLOPT_URL, $url); 
+ curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($payload)); 
+ curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); 
+ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); 
+ curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,15); 
+ curl_setopt($ch, CURLOPT_TIMEOUT, 400); //timeout in seconds 
+ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+ //execute post 
+ $result = curl_exec($ch);
+ //detecting errors
+if(curl_error($ch)){
+  
+  $error_mesg = curl_error($ch);
 }
-}
-mysqli_close($con);
-}
+ 
+  
+  
+ //displaying error message
+ if(isset($error_mesg)){
+   $curl_err= curl_error($ch);
+   echo"<br/><p> ".$curl_err."</p>";
+ }
+ //close connection 
+ curl_close($ch);
+// print_r(curl_getinfo($ch)); 
+ //print_r(json_decode($result));
+ $res= json_decode($result);
+ print_r(json_decode($result)); 
+ if($res->success==1){
+     echo"<h2>You have successfully Booked</h2>";
+     //updating the reference table
+$updt= mysqli_query($con,"update reference set ref = '$refer' where id=1");
+//saving payment regords
+mysqli_query($con,"insert into booking(date,amount,phone,RoomId) values('$date','$bAmount','$hPhone','$rnumber')");
+//updating the room to booked
+$updt= mysqli_query($con,"update room set roomStatus = 'Booked' where RoomId='$rnumber'");
+ } else{
+   echo"<h2>Booking Failed. Please check your Balance and try Again</h2>";  
+ }
 
- ?>
+
+  }else{
+    echo"<br/><h2>Sorry.Transaction could not be processed. The amount should be greater than 500/= </h2>";
+  }
+}
+?>
 </div>
     </section>
     <!-- /.content -->
@@ -310,8 +359,17 @@ mysqli_close($con);
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
+<script src="dist/js/demo.js"></script><script type="text/javascript" src="http://www.jqueryshare.net/cdn/jquery.1.12.4min.js"></script>
+
+<script src="build/js/intlTelInput.js"></script> 
 <script>
+
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
+
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({

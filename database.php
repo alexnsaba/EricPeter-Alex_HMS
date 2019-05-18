@@ -1,9 +1,9 @@
 <?php
 $con= mysqli_connect("localhost","root","");
-mysqli_query($con,"create database IF NOT EXISTS hostelManager");
-$sel= mysqli_select_db($con,"hostelManager");
+mysqli_query($con,"create database IF NOT EXISTS hosteldb");
+$sel= mysqli_select_db($con,"hosteldb");
 //creating table hosel
-mysqli_query($con,"create table IF NOT EXISTS hostel(hostelId int(20) primary key not null auto_increment,hName varchar(30) not null ,
+mysqli_query($con,"create table IF NOT EXISTS hostel(hostelId int(20) primary key not null auto_increment,hName varchar(100) not null ,
 hLocation varchar(30) not null ,hPhone varchar(13) not null unique,hCustodian varchar(30) not null ,studentType varchar(10) not null,
 hEmail varchar(30) unique not null,name varchar(20) not null,image longblob not null,status varchar(10) not null)");
 //creating admin table
@@ -20,5 +20,16 @@ Password varchar(100) not null,Country varchar(100) not null,District varchar(10
 mysqli_query($con,"create table IF NOT EXISTS Room(RoomId int(20) primary key not null auto_increment,roomNumber varchar(100) not null,roomCategory varchar(100) not null ,
 roomFloor varchar(100) not null ,roomPrice int(20) not null,roomStatus varchar(100) not null  ,hostelId  int(20) not null,name varchar(100) not null,
 roomImage longblob not null)");
+//CREATING Table for comments
+mysqli_query($con,"CREATE table IF NOT EXISTS comments(id int(20) primary key not null auto_increment,username varchar(200) not null  ,message varchar(200) not null ,date timestamp  not null DEFAULT CURRENT_TIMESTAMP,code varchar(200) not null)");
+//table for payment references
+mysqli_query($con,"CREATE table IF NOT EXISTS reference(id int(20) primary key not null auto_increment,ref int(200) not null )");
+//booking table
+mysqli_query($con,"CREATE table IF NOT EXISTS booking(bookingId int(20) primary key not null auto_increment,amount int(20) not null,phone varchar(14) ,RoomId int(20) not null )");
+mysqli_query($con,"CREATE table IF NOT EXISTS children(username varchar(200) not null  ,message varchar(200) not null ,date timestamp  not null DEFAULT CURRENT_TIMESTAMP,par_code varchar(200) not null)");
+
+
+
+
 
 ?>

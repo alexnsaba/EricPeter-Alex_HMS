@@ -88,7 +88,7 @@ session_start();
 			  <?php
 			  require_once'database.php';
 			  $user=$_SESSION['login_user'];
-			  $a= mysqli_query($con,"select * from custodian where Username='$user'");
+			  $a= mysqli_query($con,"select * from Custodian where Username='$user'");
 			  $rw = mysqli_fetch_array($a);
 			  echo $rw['LastName']." ".$rw['FirstName'];
 			  echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
@@ -162,6 +162,20 @@ session_start();
 		   </ul>
 		  
         </li>
+
+     <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-commenting" style="font-size:20px"></i> <span>COMMENTS</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="comments.php"><i class="fa fa-edit"></i> Comments</a></li>
+                      
+       </ul>
+      
+        </li>   
 		
 		</ul>
     </section>
@@ -175,7 +189,7 @@ session_start();
      <?php	 
    require_once 'database.php';
    $user = $_SESSION['login_user'];
-   $sel_cust = mysqli_query($con,"select * from custodian where Username='$user'");
+   $sel_cust = mysqli_query($con,"select * from Custodian where Username='$user'");
    $row1= mysqli_fetch_array($sel_cust);
    $hostelEmail= $row1['HostelEmail'];
    

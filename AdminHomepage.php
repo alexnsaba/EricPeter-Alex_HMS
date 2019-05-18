@@ -83,16 +83,21 @@ session_start();
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-              <span class="hidden-xs">Custodian's name</span>
+              <img src="dist/img/user.png" class="user-image" alt="User Image">
+              <span class="hidden-xs">
+                
+                <?php
+                echo $_SESSION['login_user'];      
+                ?>
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="dist/img/user.png" class="img-circle" alt="User Image">
 
                 <p>
-                  custodian
+                  Admin
                   
                 </p>
               </li>                          
@@ -118,30 +123,30 @@ session_start();
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">CUSTODIAN'S DASH BOARD</li>
+        <li class="header">ADMIN'S DASH BOARD</li>
         <li class="active treeview">
           <a href="#">
-            <i class="fa fa-home" style="font-size:25px"></i> <span>HOSTEL REGISTRATION</span>
+            <i class="fa fa-home" style="font-size:25px"></i> <span>MANAGE HOSTELS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right" ></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="AdminHomepage.php"><i class="fa fa-hotel"></i>New Hostel details </a></li>     
-      <li><a href="ViewHostel.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
+            <li class="active"><a href="AdminHomepage.php"><i class="fa fa-hotel"></i>Approve/Reject Hostel</a></li>     
+      <li><a href="hostelList.php"><i class="fa fa-newspaper-o"></i> View All hostels </a></li>
           </ul>
       
         </li>
     
       <li class="active treeview">
           <a href="#">
-            <i class="fa fa-desktop" style="font-size:20px"></i> <span>UPDATES</span>
+            <i class="fa fa-commenting" style="font-size:20px"></i> <span style="font-size: 17px">COMMENTS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-      <li><a href="#"><i class="fa fa-newspaper-o"></i>View Updates</a></li>          
+      <li><a href="AdminComment.php"><i class="fa fa-newspaper-o"></i>Comment</a></li>          
        </ul>
       
         </li>

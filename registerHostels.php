@@ -36,14 +36,16 @@ session_start();
   <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
+<!--styles for telephone-->
+ <link rel="stylesheet" href="build/css/intlTelInput.css">
+ <link rel="stylesheet" href="build/css/demo.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->  
   
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+ <script type="text/javascript" src="http://www.jqueryshare.net/cdn/jquery.1.12.4min.js"></script>
  
-
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <link rel="stylesheet" href="css/style.css">
@@ -83,28 +85,29 @@ session_start();
 
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"> 
               
-               <span class="hidden-xs">
-			  <?php
-			  require_once'database.php';
-			  $user=$_SESSION['login_user'];
-			  $a= mysqli_query($con,"select * from custodian where Username='$user'");
-			  $rw = mysqli_fetch_array($a);
-			  echo $rw['LastName']." ".$rw['FirstName'];
-			  echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
-			  
-			  ?>
-			  </span>
+              <span class="hidden-xs">
+        <?php
+        require_once'database.php';
+        $user=$_SESSION['login_user'];
+        $a= mysqli_query($con,"select * from Custodian where Username='$user'");
+        $rw = mysqli_fetch_array($a);
+        echo $rw['LastName']." ".$rw['FirstName'];
+        echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
+        
+        ?>
+        </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-			   <?php	  
-			  
-			  echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
-			  
-			  ?>
+         <?php    
+        
+        echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
+        
+        ?>
+                
 
                 <p>
                   custodian
@@ -114,7 +117,7 @@ session_start();
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
+                  <a href="logout.php" class="btn btn-primary"> <i class="fa fa-power-off" style="font-size:30px"></i> Log Out</a>
                 </div>
                 <div class="pull-right">
                   <a href="#" class="btn btn-primary"><i class="fa fa-window-close" style="font-size:30px"></i> Cancel</a>
@@ -127,7 +130,7 @@ session_start();
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
+    <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">         
       <!-- /.search form -->
@@ -143,13 +146,13 @@ session_start();
           </a>
           <ul class="treeview-menu">
             <li class="active"><a href="registerHostels.php"><i class="fa fa-hotel"></i>New Hostel details </a></li>
-            <li><a href="editHostelDetails.php"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>			
-			<li><a href="viewHostelProfile.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
+            <li><a href="editHostelDetails.php"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>      
+      <li><a href="viewHostelProfile.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
           </ul>
-		  
+      
         </li>
-		
-		  <li class="active treeview">
+    
+      <li class="active treeview">
           <a href="#">
             <i class="fa fa-desktop" style="font-size:20px"></i> <span>UPDATES</span>
             <span class="pull-right-container">
@@ -157,14 +160,28 @@ session_start();
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Update Room details</a></li>
-            <li><a href="#"><i class="fa fa-trash-o"></i> Edit Room Details</a></li>
-			<li><a href="#"><i class="fa fa-newspaper-o"></i>View your pdates</a></li>					
-		   </ul>
-		  
+            <li class="active"><a href="updateRooms.php"><i class="fa fa-circle-o"></i> Update Room details</a></li>
+            <li><a href="roomEdit.php"><i class="fa fa-trash-o"></i> Edit Room Details</a></li>
+      <li><a href="viewRoomUpdates.php"><i class="fa fa-newspaper-o"></i>View your pdates</a></li>          
+       </ul>
+      
         </li>
-		
-		</ul>
+
+     <li class="active treeview">
+          <a href="#">
+            <i class="fa fa-commenting" style="font-size:20px"></i> <span>COMMENTS</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="comments.php"><i class="fa fa-edit"></i> Comments</a></li>
+                      
+       </ul>
+      
+        </li>   
+    
+    </ul>
     </section>
     <!-- /.sidebar -->
   </aside>
@@ -178,7 +195,8 @@ session_start();
     <section class="content">
 	<!--Put your page content here-->	
      <h2>Fill all the fields</h2>	
-    						<div class="panel-body">
+    						<div class="panel-body"> 
+
 	<form method="post" action="registerHostels.php" enctype="multipart/form-data" name="registration" class="form-horizontal">
 											
 										
@@ -201,7 +219,9 @@ session_start();
 <div class="form-group">
 <label class="col-sm-2 control-label">Telephone Number  </label>
 <div class="col-sm-8">
-<input type="text" name="hPhone" id="hPhone"  class="form-control" required="required" placeholder="This number should be registered on mobile money">
+  
+<input type="tel" name="hPhone" id="mobile-number"  class="class="form-control" required="required">
+
 </div>
 </div>
 
@@ -243,7 +263,18 @@ session_start();
 
 <input type="submit" name="register" Value="Register" class="btn btn-primary">
 </div>
-</form><br/>
+</form>
+<script type="text/javascript" src="http://www.jqueryshare.net/cdn/jquery.1.12.4min.js"></script>
+
+<script src="build/js/intlTelInput.js"></script> 
+<script>
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
+</script>
+<br/>
 <div>
 <?php
 if(isset($_POST['register'])){
@@ -351,7 +382,18 @@ if(isset($_POST['register'])){
 <script src="dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+
+<script type="text/javascript" src="http://www.jqueryshare.net/cdn/jquery.1.12.4min.js"></script>
+
+<script src="build/js/intlTelInput.js"></script> 
 <script>
+
+  $( document ).ready(function() {
+
+      $("#mobile-number").intlTelInput();
+
+      });
+
   $(function () {
     $('#example1').DataTable()
     $('#example2').DataTable({
@@ -364,6 +406,7 @@ if(isset($_POST['register'])){
     })
   })
 </script>
+
 </body>
 </html>
 

@@ -67,8 +67,9 @@ if (isset($_POST['login_user'])) {
  ?>
 <html>
 <head>
-<title>Login Form Design</title>
+<title>Hostel Manager</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    
 <body>
     <div class="loginbox">
     <img src="avatar.png" class="avatar">
@@ -76,7 +77,7 @@ if (isset($_POST['login_user'])) {
         <form action="index.php" method="POST">
             <div class="rs-select2 js-select-simple select--no-search">
                 <label>LoginAS</label>
-                    <select name="type" value="type"> 
+                    <select name="type" value="type" style="color: black"> 
 
                         <option  selected value="Admin" >Admin</option>
                         <option  value="Student">Student</option>
@@ -87,7 +88,7 @@ if (isset($_POST['login_user'])) {
             <p>Username</p>
             <input type="text" name="first_name" placeholder="Enter Username">
             <p>Password</p>
-            <input type="password" name="password" placeholder="Enter Password">
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Password">
             <input type="submit" name="login_user" value="Login">
             <a href="#">Lost your password?</a><br>
             <a href="register.php">SignUp as Student</a><br>

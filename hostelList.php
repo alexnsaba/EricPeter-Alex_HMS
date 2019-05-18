@@ -3,8 +3,7 @@ session_start();
 			if(isset($_SESSION['login_user'])&& !empty($_SESSION['login_user'])){
 			}else{
 			 header("location:index.php");	
-			}
-			
+			}			
  ?>	
 <html>
 <head>
@@ -82,31 +81,23 @@ session_start();
         <ul class="nav navbar-nav">         
 
           <!-- User Account: style can be found in dropdown.less -->
-          <li class="dropdown user user-menu">
+           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="dist/img/user.png" class="user-image" alt="User Image">
               <span class="hidden-xs">
-			  <?php
-			  require_once'database.php';
-			  $user=$_SESSION['login_user'];
-			  $a= mysqli_query($con,"select * from Custodian where Username='$user'");
-			  $rw = mysqli_fetch_array($a);
-			  echo $rw['LastName']." ".$rw['FirstName'];
-			  echo'<img class="user-image" src="data:image;base64,'.$rw['image'].'" >';
-			  //mysqli_close($con);
-			  ?>
-			  </span>
+                
+                <?php
+                echo $_SESSION['login_user'];      
+                ?>
+              </span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-			   <?php	  
-			  
-			  echo'<img class="img-circle" src="data:image;base64,'.$rw['image'].'" >';
-			  
-			  ?>
+                <img src="dist/img/user.png" class="img-circle" alt="User Image">
 
                 <p>
-                  custodian
+                  Admin
                   
                 </p>
               </li>                          
@@ -126,125 +117,100 @@ session_start();
     </nav>
   </header>
   <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+  <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">         
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">CUSTODIAN'S DASH BOARD</li>
+        <li class="header">ADMIN'S DASH BOARD</li>
         <li class="active treeview">
           <a href="#">
-            <i class="fa fa-home" style="font-size:25px"></i> <span>HOSTEL REGISTRATION</span>
+            <i class="fa fa-home" style="font-size:25px"></i> <span>MANAGE HOSTELS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right" ></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="registerHostels.php"><i class="fa fa-hotel"></i>New Hostel details </a></li>
-            <li><a href="editHostelDetails.php"><i class="fa fa-edit"></i> Edit Hostel Details </a></li>      
-      <li><a href="viewHostelProfile.php"><i class="fa fa-newspaper-o"></i> View Hostel Profile </a></li>
+            <li class="active"><a href="AdminHomepage.php"><i class="fa fa-hotel"></i>Approve/Reject Hostel</a></li>     
+      <li><a href="hostelList.php"><i class="fa fa-newspaper-o"></i> View All hostels </a></li>
           </ul>
       
         </li>
     
       <li class="active treeview">
           <a href="#">
-            <i class="fa fa-desktop" style="font-size:20px"></i> <span>UPDATES</span>
+            <i class="fa fa-commenting" style="font-size:20px"></i> <span style="font-size: 17px">COMMENTS</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li class="active"><a href="updateRooms.php"><i class="fa fa-circle-o"></i> Update Room details</a></li>
-            <li><a href="roomEdit.php"><i class="fa fa-trash-o"></i> Edit Room Details</a></li>
-      <li><a href="viewRoomUpdates.php"><i class="fa fa-newspaper-o"></i>View your pdates</a></li>          
+      <li><a href="AdminComment.php"><i class="fa fa-newspaper-o"></i>Comment</a></li>          
        </ul>
       
         </li>
-
-          <ul class="treeview-menu">
-            <li class="active"><a href="comments.php"><i class="fa fa-edit"></i> Comments</a></li>
-                      
-       </ul>
-      
-        </li>   
     
     </ul>
-    </section>
-    <!-- /.sidebar -->
+    </section>    <!-- /.sidebar -->
   </aside>
-     <li class="active treeview">
-          <a href="#">
-            <i class="fa fa-commenting" style="font-size:20px"></i> <span>COMMENTS</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->  
-	<h1> <center> RECENT UPDATES</center></h1>
+	
      <?php	 
-   require_once 'database.php';
-   $user = $_SESSION['login_user'];
-   $sel_cust = mysqli_query($con,"select * from Custodian where Username='$user'");
-   $row1= mysqli_fetch_array($sel_cust);
-   $hostelEmail= $row1['HostelEmail'];
-   $sel_host = mysqli_query($con,"select * from hostel where hEmail='$hostelEmail'");
-   $row2= mysqli_fetch_array($sel_host);
-   $hostId = $row2['hostelId'];
-   //selecting from room
-    $sel = mysqli_query($con,"select * from Room where hostelId='$hostId'");
+   require_once 'database.php'; 
+   $sel = mysqli_query($con,"select * from hostel");
+   $ll=mysqli_num_rows($sel);
    $num= mysqli_num_rows($sel);
    if($num >0){
 	   
 	echo"<div class='box'>";
 	echo"<div class='box-body'>";
+	echo'<h2><center>LIST OF ALL HOSTELS<center></h2>';
 	echo"<table  id='example1' class='table table-bordered table-striped'>";
 	echo"<thead>";
 	echo"<tr>";
-	echo"<th> <center>Room Id</center></th>";	
-	echo"<th> <center>Room Number</center> </th>";
-	echo"<th><center>Room Category</center></th>";
-	echo"<th><center>Floor</center>	</th>";
-	echo"<th><center>Price</center></th>";
+	echo"<th> <center>HostelId</center></th>";	
+	echo"<th> <center>Hostel Name</center> </th>";
+	echo"<th><center>Location</center></th>";
+	echo"<th><center>Contact</center>	</th>";
+	echo"<th><center>Custodian</center></th>";
+	echo"<th>	<center>Accepts</center>	</th>";
+	echo"<th>	<center>Hostel Email</center>	</th>";
+	echo"<th>	<center>Hostel Image</center>	</th>";
 	echo"<th>	<center>Status</center>	</th>";
-	echo"<th>	<center>Hostel Id</center>	</th>";
-	echo"<th>	<center>Hostel Name</center>	</th>";
-	echo"<th>	<center>Room Image</center>	</th>";	
 	echo"</tr>";
 	echo"</thead>";
 	echo"<tbody>";
 	while($row= mysqli_fetch_array($sel)){
 		echo"<tr>";
-	echo"<td>".$row['RoomId']."</td>";	
-	echo"<td>".$row['roomNumber']."</td>";
-	echo"<td>".$row['roomCategory']."</td>";
-	echo"<td>".$row['roomFloor']."</td>";
-	echo"<td> UGX ".number_format($row['roomPrice'])."</td>";
-	echo"<td>".$row['roomStatus']."</td>";
-	echo"<td>".$row['hostelId']."</td>";
-	echo"<td>".$row2['hName']."</td>";
-    echo'<td><img height="80" width="80" src="data:image;base64,'.$row['roomImage'].'" ></td>';
+	echo"<td>".$row['hostelId']."</td>";	
+	echo"<td>".$row['hName']."</td>";
+	echo"<td>".$row['hLocation']."</td>";
+	echo"<td>".$row['hPhone']."</td>";
+	echo"<td>".$row['hCustodian']."</td>";
+	echo"<td>".$row['studentType']."</td>";
+	echo"<td>".$row['hEmail']."</td>";
+   echo'<td><img height="80" width="80" src="data:image;base64,'.$row['image'].'" ></td>';
+  //echo base64_encode($image);
   
-  
-	
+	echo"<td>".$row['status']."</td>";
 	echo"</tr>";		
 	}
 	echo"</tbody>";
 	echo"<tfoot>";
 	echo"<tr>";
-	echo"<th> <center>Room Id</center></th>";	
-	echo"<th> <center>Room Number</center> </th>";
-	echo"<th><center>Room Category</center></th>";
-	echo"<th><center>Floor</center>	</th>";
-	echo"<th><center>Price</center></th>";
+	echo"<th> <center>HostelId</center></th>";	
+	echo"<th> <center>Hostel Name</center> </th>";
+	echo"<th><center>Location</center></th>";
+	echo"<th><center>Contact</center>	</th>";
+	echo"<th><center>Custodian</center></th>";
+	echo"<th>	<center>Accepts</center>	</th>";
+	echo"<th>	<center>Hostel Email</center>	</th>";
+	echo"<th>	<center>Hostel Image</center>	</th>";
 	echo"<th>	<center>Status</center>	</th>";
-	echo"<th>	<center>Hostel Id</center>	</th>";
-	echo"<th>	<center>Hostel Name</center>	</th>";
-	echo"<th>	<center>Room Image</center>	</th>";
 	echo"</tr>";
 	echo"</tfoot>";
 	
@@ -252,7 +218,7 @@ session_start();
 	echo"</div>";
 	echo"</div>";
    }else{
-	   echo"<center><h2>No room records are available. Please update your rooms.</h2></center>";
+	   echo"<center><h2>No Hostel records are available</h2></center>";
    }
 	mysqli_close($con);
 	?>
@@ -336,4 +302,7 @@ session_start();
   })
 </script>
 </body>
-</html>
+</html> ';
+
+
+
